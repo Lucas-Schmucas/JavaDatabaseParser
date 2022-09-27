@@ -8,13 +8,17 @@ import java.io.*;
 
 public class FileDialog extends JFrame {
 
+    private String fileString = "";
+
+    private String databaseName = "";
     private JButton bDateioeffnen = new JButton();
+    private JButton bStringwandeln = new JButton();
 
     public FileDialog() {
         super();
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        int frameWidth = 235;
-        int frameHeight = 143;
+        int frameWidth = 600;
+        int frameHeight = 200;
         setSize(frameWidth, frameHeight);
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (d.width - getSize().width) / 2;
@@ -25,7 +29,7 @@ public class FileDialog extends JFrame {
         Container cp = getContentPane();
         cp.setLayout(null);
 
-        bDateioeffnen.setBounds(24, 16, 171, 65);
+        bDateioeffnen.setBounds(25, 25, 150, 50);
         bDateioeffnen.setText("Datei öffnen");
         bDateioeffnen.setMargin(new Insets(2, 2, 2, 2));
         bDateioeffnen.addActionListener(new ActionListener() {
@@ -33,7 +37,17 @@ public class FileDialog extends JFrame {
                 bDateioeffnen_ActionPerformed(evt);
             }
         });
+
+        bStringwandeln.setBounds(200, 25, 150, 50);;
+        bStringwandeln.setText("String wandeln");
+        bStringwandeln.setMargin(new Insets(2, 2, 2, 2));
+        bStringwandeln.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                bStringwandeln_ActionPerformed(evt);
+            }
+        });
         cp.add(bDateioeffnen);
+        cp.add(bStringwandeln);
 
         setVisible(true);
     }
@@ -57,13 +71,21 @@ public class FileDialog extends JFrame {
                 BufferedReader br = new BufferedReader(new FileReader(fil));
                 System.out.println("file content: ");
                 int r = 0;
+                fileString = "";
                 while ((r = br.read()) != -1) {
-                    System.out.print((char) r);
+                    fileString += ((char) r);
                 }
+                System.out.println(fileString);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+    public void bStringwandeln_ActionPerformed(ActionEvent evt) {
+        String[] stringByLine = fileString.split("\\n");
+        databaseName = stringByLine[0];
+
+
     }
 }
 
